@@ -26,6 +26,9 @@ n=sys.argv[1]
 n = int(n)
 
 Time,epsilon,vconcst,gradienttype,F,filtipmax,tokenstrength,filspacing,randfilextend,randfilretract = int(sys.argv[2]),float(sys.argv[3]),float(sys.argv[4]),int(sys.argv[5]),float(sys.argv[6]),float(sys.argv[7]),float(sys.argv[8]),int(sys.argv[9]),float(sys.argv[10]),float(sys.argv[11])
+seed = -1
+if len(sys.argv) > 12:
+    seed = long(sys.argv[12])
 
 if (randfilextend != -1):
     epsilon = 0
@@ -57,7 +60,7 @@ for i in range(1):
     # print i,eps
 #             world = springAgent.World(eps,grad,springAgent.createSeed(),2,1000000)
 #             world = springAgent.World(eps,0,springAgent.createSeed(),7,V,F,filtipmax,tokenstrength)
-    world = springAgent.World(epsilon,vconcst,gradienttype,F,filtipmax,tokenstrength,filspacing,randfilextend,randfilretract)
+    world = springAgent.World(epsilon,vconcst,gradienttype,F,filtipmax,tokenstrength,filspacing,randfilextend,randfilretract,seed)
     world.simulateTimestep()
     smap_entropies = []
     smap_entropies_cell1 = []
@@ -130,8 +133,8 @@ for i in range(1):
     b = np.array(smap_intensities_both)
     intensities.append(b)
 
-np.save('run {} entropy T {} epsilon {} vconcst {} gradienttype {} F {} filtipmax {} tokenstrength {} filspacing {} randfilextend {} randfilretract {}'.format(n,Time,epsilon,vconcst,gradienttype,F,filtipmax,tokenstrength, filspacing, randfilextend, randfilretract),np.array(entropies))
-np.save('run {} intensity T {} epsilon {} vconcst {} gradienttype {} F {} filtipmax {} tokenstrength {} filspacing {} randfilextend {} randfilretract {}'.format(n,Time,epsilon,vconcst,gradienttype,F,filtipmax,tokenstrength,filspacing, randfilextend, randfilretract),np.array(intensities))
-np.save('run {} time T {} epsilon {} vconcst {} gradienttype {} F {} filtipmax {} tokenstrength {} filspacing {} randfilextend {} randfilretract {}'.format(n,Time,epsilon,vconcst,gradienttype,F,filtipmax,tokenstrength,filspacing, randfilextend, randfilretract),np.array(times)-100)
+np.save('run {:g} entropy T {:g} epsilon {:g} vconcst {:g} gradienttype {:g} F {:g} filtipmax {:g} tokenstrength {:g} filspacing {:g} randfilextend {:g} randfilretract {:g} seed {:g}'.format(n,Time,epsilon,vconcst,gradienttype,F,filtipmax,tokenstrength, filspacing, randfilextend, randfilretract, seed),np.array(entropies))
+np.save('run {:g} intensity T {:g} epsilon {:g} vconcst {:g} gradienttype {:g} F {:g} filtipmax {:g} tokenstrength {:g} filspacing {:g} randfilextend {:g} randfilretract {:g} seed {:g}'.format(n,Time,epsilon,vconcst,gradienttype,F,filtipmax,tokenstrength,filspacing, randfilextend, randfilretract, seed),np.array(intensities))
+np.save('run {:g} time T {:g} epsilon {:g} vconcst {:g} gradienttype {:g} F {:g} filtipmax {:g} tokenstrength {:g} filspacing {:g} randfilextend {:g} randfilretract {:g} seed {:g}'.format(n,Time,epsilon,vconcst,gradienttype,F,filtipmax,tokenstrength,filspacing, randfilextend, randfilretract, seed),np.array(times)-100)
 
 

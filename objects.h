@@ -22,6 +22,8 @@ namespace py = pybind11;
 #include <iomanip>
 #include <fstream>
 #include <array>
+#include <random>
+#include <algorithm>
 
 
 ///------------------------------------
@@ -134,8 +136,7 @@ extern int GRADIENT;//FIXED_MACROS////ASTRO_UNIFORM///FIXED_MACROS///ASTRO_LINEA
 extern float VEGFconc; ///conc of VEGF in flat gradient
 extern float VconcST;
 extern float VconcSTMACRO;
-extern long long test_seed;
-
+extern long long seed;
 ///cytoskeleton
 #define FILOPODIA true
 #define VEIL_ADVANCE false
@@ -184,12 +185,34 @@ extern float M2_lambda;
 #define springConstant 0.05f
 #define FAspringConstant 0.05f
 #define filSpringConstant 0.95f
-#define filBaseConstant 0.7f 
+#define filBaseConstant 0.7f ///was 0.7 lower as smaller cells?
 #define junctionConstant 0.4f
 #define filSpringLength 0.1f
 #define springLength 1.0f
 #define JunctionSpringLength 0.5f
 
+#define NEW_RAND_MAX 32767
+extern mt19937 g;
+extern uniform_real_distribution<double> dist;
+int new_rand();
+
+void create_statistics_file(string statisticsFilename);
+void write_to_statistics_file(string statisticsFilename, string line);
+std::time_t get_current_time();
+std::string format_time_string(std::time_t time, bool start);
+
+template <class _RandomAccessIterator>
+void new_random_shuffle( _RandomAccessIterator first, _RandomAccessIterator last )
+{
+    if (first != last)
+      for (_RandomAccessIterator i = first + 1; i != last; ++i)
+      {
+          // XXX rand() % N is not uniformly distributed
+          _RandomAccessIterator j = first + new_rand() % ((i - first) + 1);
+          if (i != j)
+              std::iter_swap(i, j);
+      }
+}
 
 /////analysis/quantification
 //#define SigRange 15.0f*(VEGFRnorm/100.0f) ///percentage of total VEGFR poss, within this range we say the cell is stable.
@@ -236,7 +259,7 @@ extern float CellPosOffset;
 ///GUI related
 #define user_defined_fils_spacing false
 
-
+///REMOVE!
 extern bool MEM_LEAK_OCCURRING;
 
 enum Gradient {
@@ -746,7 +769,7 @@ public:
     //TODO: add yMax in..
     //TODO: put ybaseline back in
     //World(float epsilon = 0.9, float vconcst = 0.04, int gradientType = 2, /*float yBaseline,*/ float filConstNorm = 2.0f, float filTipMax = 10, float tokenstrength = 1);
-    World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing, float randomFilExtend, float randFilRetract);
+    World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing, float randomFilExtend, float randFilRetract, long long s);
     void runSimulation();
     void creationTimestep(int movie);
     void simulateTimestep();

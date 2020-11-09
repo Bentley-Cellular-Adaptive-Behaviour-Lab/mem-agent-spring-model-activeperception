@@ -19,6 +19,7 @@ randFilExtend=-1
 randFilRetract=-1
 analysis="time_to_pattern"
 maxtime=5000 #just for pybind version
+seed=-1
 
 POSITIONAL=()
 while [[ $# -gt 0 ]]
@@ -81,6 +82,11 @@ case $key in
     shift # past argument
     shift # past value
     ;;
+    --seed)
+    seed="$2"
+    shift # past argument
+    shift # past value
+    ;;
     *)    # unknown option
     POSITIONAL+=("$1") # save it in an array for later
     shift # past argument
@@ -106,9 +112,9 @@ if [ "$analysis" == "pybind" ]
 then
     ml Python/2.7.16-GCCcore-8.3.0
     source /camp/lab/bentleyk/home/shared/"$USER"/APSingleCodebase/bin/activate
-    echo "running pybind version, passing in the following arguments: run: $SLURM_ARRAY_TASK_ID maxtime: $maxtime epsilon: $epsilon vconcst: $vconcst gradient: $gradient filconstnorm: $filconstnorm filtipmax: $filtipmax tokenstrength: $tokenstrength filspacing: $filspacing randFilExtend: $randFilExtend randFilRetract: $randFilRetract"
-    python APentropyintensity.py $SLURM_ARRAY_TASK_ID $maxtime $epsilon $vconcst $gradient $filconstnorm $filtipmax $tokenstrength $filspacing $randFilExtend $randFilRetract
+    echo "running pybind version, passing in the following arguments: run: $SLURM_ARRAY_TASK_ID maxtime: $maxtime epsilon: $epsilon vconcst: $vconcst gradient: $gradient filconstnorm: $filconstnorm filtipmax: $filtipmax tokenstrength: $tokenstrength filspacing: $filspacing randFilExtend: $randFilExtend randFilRetract: $randFilRetract seed: $seed"
+    python APentropyintensity.py $SLURM_ARRAY_TASK_ID $maxtime $epsilon $vconcst $gradient $filconstnorm $filtipmax $tokenstrength $filspacing $randFilExtend $randFilRetract $seed
 else
-    echo "running executable, passing in the following arguments: run: $SLURM_ARRAY_TASK_ID epsilon: $epsilon vconcst: $vconcst gradient: $gradient filconstnorm: $filconstnorm filtipmax: $filtipmax tokenstrength: $tokenstrength filspacing: $filspacing randFilExtend: $randFilExtend randFilRetract: $randFilRetract"
-    ./springAgent $SLURM_ARRAY_TASK_ID $epsilon $vconcst $gradient $filconstnorm $filtipmax $tokenstrength $filspacing $randFilExtend $randFilRetract
+    echo "running executable, passing in the following arguments: run: $SLURM_ARRAY_TASK_ID epsilon: $epsilon vconcst: $vconcst gradient: $gradient filconstnorm: $filconstnorm filtipmax: $filtipmax tokenstrength: $tokenstrength filspacing: $filspacing randFilExtend: $randFilExtend randFilRetract: $randFilRetract seed: $seed"
+    ./springAgent $SLURM_ARRAY_TASK_ID $epsilon $vconcst $gradient $filconstnorm $filtipmax $tokenstrength $filspacing $randFilExtend $randFilRetract $seed
 fi

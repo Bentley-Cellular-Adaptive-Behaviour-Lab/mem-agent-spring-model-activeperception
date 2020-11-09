@@ -271,12 +271,21 @@ EC::EC(World*  world){
 
 //   scale_ProtLevels_to_CellSize();
 //}
-World::World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing, float randomFilExtend, float randFilRetract)
+World::World(float epsilon, float vconcst, int gradientType, /*float yBaseline,*/ float filConstNorm, float filTipMax, float tokenstrength, int filspacing, float randomFilExtend, float randFilRetract, long long s)
 {
     if (TESTING == true)
+    {
         srand(100);
+    }
+    else if (s > 0)
+    {
+        seed = s;
+        g = mt19937(seed);
+    }
     else
-        srand(rdtsc());
+    {
+        g = mt19937(rdtsc());
+    }
 
     EPSILON = epsilon;
     VconcST = vconcst;
@@ -354,14 +363,16 @@ World::World()
     {
         srand(100);
     }
-    else if (test_seed >= 0)
+    else if (seed > 0)
     {
-        cout << "seeding with: " << test_seed << endl;
-        srand(test_seed);
+        cout << "seeding with value: " << seed << endl;
+        g = mt19937(seed);
+        //srand(seed);
     }
     else
     {
-        srand(rdtsc());
+        //srand(rdtsc());
+        g = mt19937(rdtsc());
     }
 
     //    char outfilename[21];

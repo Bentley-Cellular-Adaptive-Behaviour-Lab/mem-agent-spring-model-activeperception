@@ -235,7 +235,8 @@ int J;
             else if(VEGFgradient==ASTRO_LINEAR){
                 if(J>gap+(2*vesselRadius)-4){
                     if(checkForAstro(ep->Ex, ep->Ey, ep->Ez)==1){
-                        minus = rand()*(float)(linVAR)/(float)RAND_MAX;
+                        //minus = rand()*(float)(linVAR)/(float)RAND_MAX;
+                        minus = new_rand()*(float)(linVAR)/(float)NEW_RAND_MAX;
                         ep->VEGF=J*VconcST - minus;
                         if(ep->VEGF<0) ep->VEGF=0.0f;
                         
@@ -295,7 +296,8 @@ int J;
                     if(BACKGROUND_VEGF==STEADY){
                         
                         if(checkForAstro(ep->Ex, ep->Ey, ep->Ez)==1){
-                            minus = rand()*(float)(linVAR)/(float)RAND_MAX;
+                            //minus = rand()*(float)(linVAR)/(float)RAND_MAX;
+                            minus = new_rand()*(float)(linVAR)/(float)NEW_RAND_MAX;
                             ep->VEGF+=VEGFbase+(J*VconcST) - minus;
                             if(ep->VEGF<0) ep->VEGF=0.0f;
                             
@@ -305,7 +307,8 @@ int J;
                     }
                     else if(BACKGROUND_VEGF==FLAT){
                         if(checkForAstro(ep->Ex, ep->Ey, ep->Ez)==1){
-                            minus = rand()*(float)(linVAR)/(float)RAND_MAX;
+                            //minus = rand()*(float)(linVAR)/(float)RAND_MAX;
+                            minus = new_rand()*(float)(linVAR)/(float)NEW_RAND_MAX;
                             ep->VEGF+=VEGFconc-minus;
                             if(ep->VEGF<0) ep->VEGF=0.0f;
                         }

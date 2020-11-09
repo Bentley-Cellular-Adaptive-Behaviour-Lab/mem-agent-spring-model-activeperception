@@ -16,6 +16,7 @@ filspacing=2
 randFilExtend=-1
 randFilRetract=-1
 maxtime=5000 #just for pybind version
+seed=-1
 
 # other_args=()
 POSITIONAL=()
@@ -81,6 +82,11 @@ case $key in
     ;;
     --maxtime)
     maxtime="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    --seed)
+    seed="$2"
     shift # past argument
     shift # past value
     ;;
@@ -228,10 +234,10 @@ do
             if [ "$analysis" == "pybind" ]
             then
                 echo "calling slurm script for pybind, passing in flags: --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime"
-                ssh login.camp.thecrick.org  "cd $camp_home/$camp_subfolder_name; echo \"running slurm script... \"; sbatch --array 1-$numberOfRuns slurmScript.sh --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime; exit;"
+                ssh login.camp.thecrick.org  "cd $camp_home/$camp_subfolder_name; echo \"running slurm script... \"; sbatch --array 1-$numberOfRuns slurmScript.sh --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime --seed $seed; exit;"
             else
-                echo "calling slurm script for $analysis, passing in flags: --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --randFilExtend $randFilExtend --randFilRetract $randFilRetract"
-                ssh login.camp.thecrick.org  "cd $camp_home/$camp_subfolder_name; echo \"running slurm script... \"; sbatch --array 1-$numberOfRuns slurmScript.sh --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime; exit;"
+                echo "calling slurm script for $analysis, passing in flags: --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --randFilExtend $randFilExtend --randFilRetract $randFilRetract --seed $seed"
+                ssh login.camp.thecrick.org  "cd $camp_home/$camp_subfolder_name; echo \"running slurm script... \"; sbatch --array 1-$numberOfRuns slurmScript.sh --analysis $analysis --epsilon $epsilon --vconcst $vconcst --gradient $gradient --filconstnorm $filconstnorm --filtipmax $filtipmax --tokenstrength $tokenstrength --filspacing $filspacing --randFilExtend $randFilExtend --randFilRetract $randFilRetract --maxtime $maxtime --seed $seed; exit;"
             fi
         done
     done

@@ -1,0 +1,5 @@
+APSingleCodebase.*
+*.txt
+*.o
+springAgent
+springAgent.so

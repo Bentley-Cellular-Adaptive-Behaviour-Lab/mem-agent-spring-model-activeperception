@@ -647,13 +647,18 @@ void World::createECagents(int Junc_arrang){
         //put the address into the vector Ecells
         ECagents.push_back(ecp);
 
-         chose = rand();
+         //chose = rand();
+         chose = new_rand();
 	    
          ECagents[i]->VEGFRtot = 0;
 
-         ECagents[i]->red = ((float)rand()/(float)RAND_MAX);
-        ECagents[i]->green = ((float)rand()/(float)RAND_MAX);
-        ECagents[i]->blue = ((float)rand()/(float)RAND_MAX);
+         //ECagents[i]->red = ((float)rand()/(float)RAND_MAX);
+        //ECagents[i]->green = ((float)rand()/(float)RAND_MAX);
+        //ECagents[i]->blue = ((float)rand()/(float)RAND_MAX);
+
+        ECagents[i]->red = ((float)new_rand()/(float)NEW_RAND_MAX);
+        ECagents[i]->green = ((float)new_rand()/(float)NEW_RAND_MAX);
+        ECagents[i]->blue = ((float)new_rand()/(float)NEW_RAND_MAX);
 
         
         for(j=0;j<ECwidth;j++){
@@ -751,8 +756,10 @@ void World::drawMeshFirst(int i, int j, EC* ecp, int JunctArrangement){
     float depth;
     MemAgent* memp;
     int circlePosStartAb=0;
+
     r=vesselRadius;
     rL=bloodRadius;
+
     delta=((2.0f*(float)Pi)/(float)ECcross);
     deltaSteps = delta/float(ablumenalSteps);
     float offset;
@@ -898,7 +905,6 @@ void World::connectMesh(void){
                         nmp=ecp2->nodeAgents[n];
 
                         if((nmp->circlePos==POS)&&(((int)nmp->Mx==Xplus)||((int)nmp->Mx==Xminus))){
-
                             mp->neigh[N]=nmp;
                             if(mp->Cell!=nmp->Cell){
                                 //mp->Cell->nodesToRetract.push_back(mp);
@@ -2221,7 +2227,8 @@ void World::chooseMutants(void){
     int k = 0;
     float b;
     float c;
-    b = ((float)rand()/(float)RAND_MAX);
+    //b = ((float)rand()/(float)RAND_MAX);
+    b = ((float)new_rand()/(float)NEW_RAND_MAX);
 	
 	
 	//for(i=0;i<5;i++)
@@ -2235,7 +2242,8 @@ void World::chooseMutants(void){
 		
 		do
 		{
-			a = (int)(((float)rand()*tot)/(float)RAND_MAX);
+            //a = (int)(((float)rand()*tot)/(float)RAND_MAX);
+            a = (int)(((float)new_rand()*tot)/(float)NEW_RAND_MAX);
 			
 			if(a==0){
 				

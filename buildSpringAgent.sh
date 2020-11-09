@@ -67,7 +67,7 @@ then
 elif [ "$analysis" == "time_to_pattern" ]
 then
 	echo "building time_to_pattern analysis..."
-	make clean; make CDBG=-w ECpack=10 MAXtime=5000 ANALYSIS_TIME_TO_PATTERN=true GRAPHICS=$graphics
+	make clean; make CDBG=-w ECpack=10 MAXtime=10000 ANALYSIS_TIME_TO_PATTERN=true GRAPHICS=$graphics
 else
 	echo "$analysis is not a valid analysis. Enter either pybind, bistability or time_to_pattern with the -a flag."
 	exit 1

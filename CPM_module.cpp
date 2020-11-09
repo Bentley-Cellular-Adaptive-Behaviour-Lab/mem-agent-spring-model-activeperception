@@ -85,7 +85,8 @@ int steps;
             do {
 
 
-                chose = rand() % upto;
+                //chose = rand() % upto;
+                chose = new_rand() % upto;
 /*upto = worldP->ALLmemAgents.size();// + mediumAgents.size();
 
             flag = 0;
@@ -179,7 +180,8 @@ int steps;
                         }
                         if(flag2==1){
                         if(count!=1)
-                        choseReplacer = rand()%count;
+                        //choseReplacer = rand()%count;
+                        choseReplacer = new_rand()%count;
                         else choseReplacer=1;
                             
                         count=1;
@@ -239,7 +241,8 @@ int steps;
                 biasAccept = check_gradient(replaced_mem, replacer_mem);
                 if(biasAccept==true){ 
                     
-                    float prob = (float)rand()/(float)RAND_MAX;
+                    //float prob = (float)rand()/(float)RAND_MAX;
+                    float prob = (float)new_rand()/(float)RAND_MAX;
                     if(prob<BIAS_DIFFAD_CHANCE)
                     accept = true;
                 }
@@ -432,7 +435,8 @@ void CPM_module::calc_Cell_areas(void) {
     int var = ECwidth * 2;
 
     for (i = 0; i < ECELLS; i++) {
-        Q = rand() % (var);
+        //Q = rand() % (var);
+        Q = new_rand() % (var);
         worldP->ECagents[i]->ideal_Cell_area = ideal_Area;// - ((float) var / 2.0f) + Q;
 
     }
@@ -462,7 +466,8 @@ float CPM_module::Hamiltonian_change(void) {
 
 bool CPM_module::calcProb(float change) {
 
-    float chose = (float) rand() / (float) RAND_MAX;
+    //float chose = (float) rand() / (float) RAND_MAX;
+    float chose = (float) new_rand() / (float) NEW_RAND_MAX;
     float prob;
     bool accept;
 
@@ -1492,7 +1497,8 @@ bool CPM_module::check_gradient(MemAgent* replaced_mem, MemAgent* replacer_mem) 
     //if replacer mem is a tip cell... doesnt matter what other cell is...
 
     //make inversely proportional too active notch level...
-    float chance = rand() / (float) RAND_MAX;
+    //float chance = rand() / (float) RAND_MAX;
+    float chance = new_rand() / (float) NEW_RAND_MAX;
     float prob;
 
     //old version - but not inline with findings in Lars paper...
@@ -2319,7 +2325,8 @@ void CPM_module::clearUpSmallSeparatedBitsOfCells(void) {
             //need to delete this agent by force replacing by a random neigh cell.. it gets engulfed/dies
             if (countFil == 0) {
                 count = 0;
-                choseReplacer = rand() % countS;
+                //choseReplacer = rand() % countS;
+                choseReplacer = new_rand() % countS;
                 for (r = 0; r < worldP->JunctionAgents[j]->neighs; r++) {
 
 
