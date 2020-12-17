@@ -5,6 +5,9 @@ vary1_vals=()
 vary2_param=
 vary2_vals=()
 
+vary3_param=
+vary3_vals=()
+
 numberOfRuns=1
 epsilon=0.9
 vconcst=0.04
