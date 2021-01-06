@@ -2,10 +2,9 @@
 Contains pybind, bistability and time to pattern analysis methods.
 
 ## Use
-There are two main scripts that are used to build / run the sim: 
-1. **buildSpringAgent.sh**: This builds the springAgent executable (or python .so) locally.
+**buildSpringAgent.sh**: This builds the springAgent executable (or python .so) locally.
 
-2. **campScript.sh**: This connects to the camp, uploads the simulations cpp/h files onto it, builds the simulation executable (or python .so), performs the specified number of runs, copies the output files off camp back onto your local machine.
+**springAgent**: executable which needs to be run with [runtime arguments](##runtime-args).
 
 ## Analysis types
 
@@ -47,43 +46,7 @@ The following arguments are taken in by the springAgent executable, in the follo
 
 ![spring agent executable with args](/docs/springAgent_executable_args.png?raw=true)
 
-### Camp script args
-In addition to the --analysis flag, campScript.sh can also take the following list of args:
-| Flag  | Value | Description  |
-| ------------- | ------------- | ------------- |
-| --runs  | integer  | number of runs that will be executed (concurrently)  |
-| --epsilon  | float  | sets Epsilon value in sim  |
-| --vconcst  | float  | sets VconcST value in sim  |
-| --filconstnorm  | float  | sets fil vary value in sim  |
-| --filtipmax  | float  | sets filTipMax value in sim  |
-| --tokenStrength  | integer  | sets tokenStrength value in sim  |
-| --randFilExtend  | float  | sets randFilExtendValue value in sim  |
-| --randFilRetract  | float  | sets randFilRetract value in sim  |
-| --vary1  | param name + value list. eg: epsilon "0.9 0.8 0.7"  | defines first param to covary and list of values in quotes |
-| --vary2  | param name + value list. eg: filconstnorm "2.0 3.0"  | defines second param to covary and list of values in quotes |
-| --vary3  | param name + value list. eg: filspacing "2 3 4"  | defines third param to covary and list of values in quotes |
-| --maxtime  | integer  | **only for pybind version.** Sets the number of timesteps the APentropyintensity.py script runs for |
-
-Whilst analysis, vary1 and vary2 flags must be passed into the script along with values, the other flags all have the following default values if no flag and value is passed in:
-- **runs**: 1
-- **Epsilon**: 0.9
-- **VconcST**: 0.04
-- **filConstNorm**: 2.0
-- **filTipMax**: 15
-- **tokenStrength**: 1
-- **filspacing**: 2
-- **randFilExtend**: -1
-- **randFilRetract**: -1
-
-**Example command with required args:**
-![camp script with required args](/docs/campscript_required_args.png?raw=true)
-
-**Example command with extra args:**
-![camp script with extra args](/docs/campscript_full_args.png?raw=true)
-
 ## Output
-
-**NOTE:** if running the camp script and the connection between your machine and camp servers is lost, the jobs will continue to run on camp. In this scenario, ssh into the camp using the `ssh login.camp.thecrick.org` command. Then `cd` into the APSingleCodebase folder. Use `ls` to list the files in the directory, this is where all output files will be written to. Use the `sacct` command to check if all jobs have finished running (the campscript will have printed your job ID to terminal). Once all jobs have finished use the scp command `scp <your crick username>@login.camp.thecrick.org:~/APSingleCodebase/\*.{txt,npy} <local directory you want to copy files to>` to copy the .txt and .npy off camp to your local machine.
 
 ### Bistability
 Output file will be named "analysis_hysteresis_filvary_#val_epsilon_#val_VconcST#val_GRADIENT#val_FILTIPMAX#val_tokenStrength#val_run_#val_.txt" #val's will be replaced with corresponding param value.
