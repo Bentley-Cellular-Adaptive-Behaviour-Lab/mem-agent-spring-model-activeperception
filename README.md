@@ -4,7 +4,7 @@ Contains pybind, bistability and time to pattern analysis methods.
 ## Use
 **buildSpringAgent.sh**: This builds the springAgent executable (or python .so) locally.
 
-**springAgent**: executable which needs to be run with [runtime arguments](##runtime-args).
+**springAgent**: executable which needs to be run with [runtime arguments](#Runtime-args).
 
 ## Analysis types
 
