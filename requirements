@@ -1,4 +1,24 @@
-pybind11
-dit
-numpy
-sklearn
+Python Packages
+----------------
+  pybind11
+  dit
+  numpy
+  sklearn
+
+
+
+------------------------------------------------------------------------------------------------
+Jess: On the M2 Macs, there is an issue installing dit -- pip3 install gives the following error:
+
+ cddlib/lib-src/cddmp.h:30:11: fatal error: 'gmp.h' file not found
+       #include "gmp.h"
+                ^~~~~~~
+      1 error generated.
+      error: command '/usr/bin/clang' failed with exit code 1
+
+
+To get around this you need to do the following
+brew install gmp
+CFLAGS=-I`brew --prefix gmp`/include LDFLAGS=-L`brew --prefix gmp`/lib pip3 install dit 
+
+Should work, but there are always updates, so good luck
