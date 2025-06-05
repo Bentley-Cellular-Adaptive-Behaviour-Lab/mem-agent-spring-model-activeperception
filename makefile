@@ -16,7 +16,14 @@ ANALYSIS_TIME_TO_PATTERN = false
 CAMP = false
 GITHUB = false
 
-INC := -I/usr/include -I/usr/include/GL -I/usr/local/include 
+ifeq ($(UNAME_S),Linux)
+	INC := -I/usr/include -I/usr/include/GL -I/usr/local/include 
+endif
+
+ifeq ($(UNAME_S),Darwin)
+	INC := -I/opt/homebrew/include -I/opt/homebrew/include/GL 
+endif
+
 CDBG +=
 CPPFLAGS =
 PYBIND_INC = 
@@ -42,7 +49,7 @@ else
 		endif
 
 		ifeq ($(UNAME_S),Darwin)
-			LIB 	:= -framework OpenGL -framework GLUT -lglui
+			LIB := -L/opt/homebrew/lib -framework OpenGL -framework GLUT -lglui
 		endif
                 OBJS += display.o ScreenRecording.o
 	endif
