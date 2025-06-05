@@ -5,6 +5,7 @@
 #include <iomanip>
 #include "objects.h"
 #include <random>
+#include <chrono>
 
 //#include "ODEs.h"
 
@@ -12,10 +13,10 @@ using namespace std;
 typedef Location** ppLocation;
 typedef Location* pLocation;
 
-unsigned long long rdtsc(){
-    unsigned int lo,hi;
-    __asm__ __volatile__ ("rdtsc" : "=a" (lo), "=d" (hi));
-    return ((unsigned long long)hi << 32) | lo;
+unsigned long long rdtsc() {
+    auto now = std::chrono::high_resolution_clock::now();
+    auto duration = now.time_since_epoch();
+    return std::chrono::duration_cast<std::chrono::nanoseconds>(duration).count();
 }
 
 CPM_module::CPM_module(World* WorldP){
